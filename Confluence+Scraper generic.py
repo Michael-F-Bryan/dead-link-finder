@@ -55,10 +55,10 @@ def should_follow_link(href):
     if url.scheme == 'https':
         return False
     
-    if url.hostname is not None and url.hostname != '134.7.57.175':
+    if url.hostname is not None and url.hostname != 'xxx.x.xx.xxx':
         return False
     
-    if url.port is not None and url.port !=8090:
+    if url.port is not None and url.port !=XXXX:
         return False
     
     if url.path.startswith('/download/attachments/'):
@@ -88,7 +88,7 @@ login(client, 'username','password')
 
 # In[96]:
 
-r = client.get('http://134.7.57.175:8090/display/CMT17/2017+Sponsor+Drive+Day')
+r = client.get('http://xxx.x.xx.xxx:XXXX/display/random-page/2017+Event+Random+Page')
 soup = BeautifulSoup(r.text, 'html.parser')
     """
     We can now pick a page on our confluence server to index
