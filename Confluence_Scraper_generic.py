@@ -1,38 +1,32 @@
 
 # coding: utf-8
 
-# In[67]:
-
 import requests
 import re
 from urllib.parse import urlparse, urljoin
 from bs4 import BeautifulSoup
 
-
-# In[94]:
-
 url = 'http://xxx.x.xxx.xxx:XXXX'  
-    """
-    Put your IP address or url for your confluence server here.
-    Don't forget to specify port number if required!
-    """
+ 
+#Put your IP address or url for your confluence server here.
+#Don't forget to specify port number if required!
 
 def is_login_failed(soup):
-    """
-    Checks for an error message box(class aui-message-error).
-    If present, this means login failed
-    """
+
+#Checks for an error message box(class aui-message-error).
+#If present, this means login failed
+
     target_class = 'aui-message-error'
     return soup.find(class_=target_class) is not None
 
 def login(client, username, password):
-    """
-    It logs into confluence!
+
+#It logs into confluence!
     
-    It creates a payload dictionary (containing username, password and other random crap)
-    and then posts it into confluences login page. It then inspects the result and if it 
-    was a failed attempt it will throw an Exception.
-    """
+#It creates a payload dictionary (containing username, password and other random crap)
+#and then posts it into confluences login page. It then inspects the result and if it 
+#was a failed attempt it will throw an Exception.
+ 
     login_url = url + '/dologin.action'
     payload = {
         'os_username': username,
@@ -80,27 +74,14 @@ def get_links_on_page(soup):
     return links_to_check
 
 
-# In[95]:
-
 client = requests.Session()
 login(client, 'username','password')
 
-
-# In[96]:
-
 r = client.get('http://xxx.x.xx.xxx:XXXX/display/random-page/2017+Event+Random+Page')
 soup = BeautifulSoup(r.text, 'html.parser')
-    """
-    We can now pick a page on our confluence server to index
-    """
 
-# In[ ]:
-
-
-
-
-# In[97]:
-
+#We can now pick a page on our confluence server to index
+ 
 inputs = [
     ('/display/~J.Doe', True),
     ('/download/attachments/4653456/2017-event-day-page-flyer.pub?version=1&modificationDate=174500292323&api=v2', False),
@@ -112,24 +93,13 @@ inputs = [
     ('http://www.atlassian.com/c/conf/17470', False),
     ('http://www.google.com', False)
 ]
-    """
-    We now wish to give our seive a set of training data for refinement of
-    our exclusion criteria. This will ensure we only obtain the dead links we're looking for.
-    """
+
+#We now wish to give our seive a set of training data for refinement of
+#our exclusion criteria. This will ensure we only obtain the dead links we're looking for.
+ 
 for (src, should_be) in inputs:
     got = should_follow_link(src)
     if got != should_be:
         print('Link "{}", expected "{}" and got "{}" '.format(src, should_be, got))
 
-    """
-    another checker to make sure our training data matches up with what we want
-    """
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
+  #another checker to make sure our training data matches up with what we want
