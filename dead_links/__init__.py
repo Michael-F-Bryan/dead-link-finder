@@ -1,32 +1,25 @@
-
-# coding: utf-8
-
 import requests
 import re
 from urllib.parse import urlparse, urljoin
 from bs4 import BeautifulSoup
 
-url = 'http://xxx.x.xxx.xxx:XXXX'  
- 
-#Put your IP address or url for your confluence server here.
-#Don't forget to specify port number if required!
-
 def is_login_failed(soup):
-
-#Checks for an error message box(class aui-message-error).
-#If present, this means login failed
-
+    """
+    Checks for an error message box(class aui-message-error).
+    If present, this means login failed
+    """
     target_class = 'aui-message-error'
     return soup.find(class_=target_class) is not None
 
-def login(client, username, password):
 
-#It logs into confluence!
-    
-#It creates a payload dictionary (containing username, password and other random crap)
-#and then posts it into confluences login page. It then inspects the result and if it 
-#was a failed attempt it will throw an Exception.
- 
+def login(client, url, username, password):
+    """
+    It logs into confluence!
+        
+    It creates a payload dictionary (containing username, password and other random crap)
+    and then posts it into confluences login page. It then inspects the result and if it 
+    was a failed attempt it will throw an Exception.
+    """
     login_url = url + '/dologin.action'
     payload = {
         'os_username': username,
@@ -40,6 +33,7 @@ def login(client, username, password):
     
     if is_login_failed(soup):
         raise Exception('login failed')
+
 
 def should_follow_link(href):
     if href.startswith('#'):
@@ -60,6 +54,7 @@ def should_follow_link(href):
     
     return True
 
+
 def get_links_on_page(soup):
     links_to_check = []
 
@@ -74,11 +69,6 @@ def get_links_on_page(soup):
     return links_to_check
 
 
-client = requests.Session()
-login(client, 'username','password')
-
-r = client.get('http://xxx.x.xx.xxx:XXXX/display/random-page/2017+Event+Random+Page')
-soup = BeautifulSoup(r.text, 'html.parser')
 
 #We can now pick a page on our confluence server to index
  
