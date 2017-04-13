@@ -8,8 +8,9 @@ Usage:
 """
 import docopt
 import requests
-from urllib.urlparse
 from bs4 import BeautifulSoup
+
+from . import login
 
 
 def main(root_url):
@@ -21,5 +22,4 @@ def main(root_url):
 
 if __name__ == "__main__":
     args = docopt.docopt(__doc__)
-    print(args)
     main(args['<URL>'])

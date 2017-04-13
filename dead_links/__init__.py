@@ -43,10 +43,10 @@ def should_follow_link(href):
     if url.scheme == 'https':
         return False
     
-    if url.hostname is not None and url.hostname != 'xxx.x.xx.xxx':
+    if url.hostname is not None and url.hostname != '134.7.57.175':
         return False
     
-    if url.port is not None and url.port !=XXXX:
+    if url.port is not None and url.port != 8090:
         return False
     
     if url.path.startswith('/download/attachments/'):
@@ -70,26 +70,3 @@ def get_links_on_page(soup):
 
 
 
-#We can now pick a page on our confluence server to index
- 
-inputs = [
-    ('/display/~J.Doe', True),
-    ('/download/attachments/4653456/2017-event-day-page-flyer.pub?version=1&modificationDate=174500292323&api=v2', False),
-    ('#', False), 
-    ('http://xxx.x.xx.xxx:XXXX/display/~D.White', True),
-    ('http://xxx.x.xx.xxx:XXXX', False),
-    ('http://xxx.x.xx.xxx:XXXX/display/~J.Doe', False),
-    ('/display/yourpage/2017+Random+Fundraiser+Day+Review', True),
-    ('http://www.atlassian.com/c/conf/17470', False),
-    ('http://www.google.com', False)
-]
-
-#We now wish to give our seive a set of training data for refinement of
-#our exclusion criteria. This will ensure we only obtain the dead links we're looking for.
- 
-for (src, should_be) in inputs:
-    got = should_follow_link(src)
-    if got != should_be:
-        print('Link "{}", expected "{}" and got "{}" '.format(src, should_be, got))
-
-  #another checker to make sure our training data matches up with what we want
